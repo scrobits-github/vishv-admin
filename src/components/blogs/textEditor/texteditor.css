@@ -1,0 +1,242 @@
+.text_editor {
+  padding: 30px 50px;
+  background-color: #fafafa;
+}
+
+.blog_form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.blog_labels {
+  color: rgb(51, 51, 51);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.blog_inputs {
+  border: none;
+  border-bottom: 1.5px solid gray;
+  outline: none;
+  font-size: 17px;
+  padding-bottom: 5px;
+  color: black;
+  background-color: #fafafa;
+  margin-bottom: 20px;
+}
+
+.blog_submit_btn {
+  padding: 10px;
+  font-size: 20px;
+  color: white;
+  background-color: #3f51b5;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.blog_submit_btn:hover {
+  background-color: #253ece;
+}
+
+.preview_heading {
+  padding: 30px 0;
+  text-align: center;
+  border-top: 2px solid gray;
+  margin-top: 30px;
+}
+
+.preview_templet {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 20px;
+  border: 0.5px solid rgb(75, 75, 75);
+  border-radius: 10px;
+  gap: 20px;
+}
+
+.preview_image {
+  width: 100%;
+  aspect-ratio: 2;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.preview_title {
+  font-size: 30px;
+  text-align: center;
+}
+
+.preview_date_name {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  color: rgb(94, 94, 94);
+}
+
+.preview_likes {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.preview_likes svg {
+  font-size: 20px;
+  color: #253ece;
+}
+
+.preview_dates {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.blog_thumbnail_img_box {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.thumbnail_img_upload {
+  padding: 10px 20px;
+  background-color: rgb(8, 75, 8);
+  border: none;
+  color: white;
+  font-weight: 500;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.thumbnail_img_upload:hover {
+  background-color: rgb(20, 112, 20);
+}
+
+.thumbnail_img_upload svg {
+  font-size: 25px;
+  color: white;
+}
+
+.thumbnail_img_upload_successfull {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: green;
+}
+
+.blog_inputs_file {
+  border: 1px solid black;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.update_thumbnail_box {
+  display: flex;
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: space-between;
+  width: fit-content;
+  gap: 30px;
+}
+
+.update_thumbnail_box img {
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.update_thumbnail_box svg {
+  font-size: 25px;
+  color: rgb(68, 0, 0);
+  cursor: pointer;
+}
+
+.update_thumbnail_box svg:hover {
+  color: rgb(209, 0, 0);
+  cursor: pointer;
+}
+
+.ant-upload-icon {
+  display: none;
+}
+
+/* below css is use in openinig.js  */
+
+.preview_dates strong {
+  color: black;
+}
+
+.input-image-link{
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.input-image-link:hover{
+  object-fit: contain;
+}
+
+.editor-selected-images{
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.input-image-delete{
+  color: rgb(155, 0, 0);
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.input-image-copy{
+  cursor: pointer;
+  padding: 5px;
+  font-size: 30px;
+  border-radius: 5px;
+}
+
+.input-image-copy:hover{
+  background-color: #98a1d6;
+}
+
+.selected-images-container{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+
+.thumbnail-image-style {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.thumbnail-image-container {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.thumbnail-image-container svg {
+  color: rgb(112, 0, 0);
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.thumbnail-image-container svg:hover {
+  color: rgb(190, 0, 0);
+}
+
+@media screen and (max-width: 768px) {
+  .preview_templet {
+    width: 100%;
+  }
+}

@@ -1,0 +1,67 @@
+.job_card_list {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.job_card {
+  border: 1px solid black;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border-radius: 10px;
+}
+
+.job_category_date {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job_info_details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.job_info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.job_info span {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.job_view_details {
+  border: 1px solid black;
+  padding: 10px 30px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-light {
+  background: #fafafa;
+}
+
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-light.ant-menu-horizontal
+  > .ant-menu-item,
+:where(.css-dev-only-do-not-override-diro6f).ant-menu-light.ant-menu-horizontal
+  > .ant-menu-submenu {
+  min-width: 150px;
+  font-size: 15px;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .category_list {
+    width: 100%;
+  }
+  .job_card_list {
+    overflow-x: auto;
+  }
+}

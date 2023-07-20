@@ -1,0 +1,59 @@
+.main_header {
+    background-color: #3f51b5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 20px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+}
+
+.main_header svg {
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+.main_header p {
+    color: white;
+    font-size: 20px;
+}
+
+.dashboard_layout {
+    display: flex;
+}
+
+.left_dashboard_layout {
+    /* font-size: 30px; */
+}
+
+.right_dashboard_layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.layout_navigation{
+    font-size: 17px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 5%;
+}
+
+
+:where(.css-dev-only-do-not-override-diro6f).ant-drawer .ant-drawer-close {
+    order: 2;
+}
+
+:where(.css-dev-only-do-not-override-diro6f).ant-drawer .ant-drawer-body{
+    padding: 0px;
+}
+
+:where(.css-dev-only-do-not-override-diro6f).ant-menu .ant-menu-item .ant-menu-item-icon{
+    font-size: 17px;
+}

@@ -1,0 +1,179 @@
+
+
+.application_heading{
+    text-align: center;
+    padding: 50px 0;
+}
+
+.job_options_btn{
+    display: flex;
+    gap: 20px;
+}
+
+.table_column{
+    text-align: center;
+}
+
+.job_modal{
+    padding: 50px 0;
+}
+
+.job_details_page{
+    padding:30px 50px;
+}
+.career_hero{
+    width: 100%;
+    /* height: 400px; */
+    background-color: #F4F9FF;
+    padding: 70px 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.career_hero b{
+    color: gray;
+}
+
+.career_hero p{
+    width: 40%;
+    color: rgb(168, 168, 168);
+}
+
+.job_container{
+    padding: 30px 50px;
+}
+
+.job_card_list{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.job_card{
+    border: 1px solid black;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    border-radius: 10px;
+}
+
+.job_category_date{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.job_info_details{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.job_info{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.job_info span{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.job_view_details{
+    border: 1px solid black;
+    padding: 10px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+
+.application_form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+.name_input{
+    display: flex;
+    justify-content: space-between;
+}
+
+.name_input input{
+    width:47%;
+}
+
+.job_input{
+    padding: 10px;
+    border: none;
+    border: 1.5px solid gray;
+    border-radius: 10px;
+}
+.file_input{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+}
+
+.file_input input{
+    width: 50%;
+}
+
+.file_upload_btn{
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: green;
+    color: white;
+    width: fit-content;
+    border: none;
+}
+
+.job_input_submit{
+    padding: 10px;
+    border: none;
+    background-color: rgb(143, 193, 240);
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.job_input_submit:hover{
+    background-color: aqua;
+}
+
+.file_upload_msg{
+    font-size: 13px;
+    color: green;
+}
+
+.opening_btns{
+    padding: 10px 10px;
+    background-color: green;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    /* width: 10%; */
+    font-size: 18px;
+    cursor: pointer;
+    text-decoration: none;
+    align-self: flex-end;
+}
+.opening_btns:hover{
+    background-color: rgb(160, 160, 160);
+}
+
+.view_btn{
+    background-color: blue;
+}
+
+.delete_btn{
+    background-color: red;
+}
+
+:where(.css-dev-only-do-not-override-diro6f).ant-empty-normal .ant-empty-description{
+    color: gray;
+}
