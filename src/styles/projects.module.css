@@ -1,0 +1,19 @@
+.projectsContainer{
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.projectsCreateButton{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.projectsButtonStyle {
+	background: var(--primary) !important;
+	width: 10.3125rem;
+	height: 3.25rem;
+	margin-top: 1.25rem;
+	border-radius: 0rem;
+	font-size: 1.25rem;
+}

@@ -1,0 +1,45 @@
+:root {
+	--primary: #e4ae25;
+	--font-primary: 'Playfair Display', serif;
+	--font-secondary: 'Didact Gothic', sans-serif;
+	--font-tertiary: 'Vast Shadow', cursive;
+}
+.sidebarLogo {
+	display: flex !important;
+	width: 100% !important;
+	justify-content: center;
+	padding: 5%;
+}
+
+.projectsTable .ant-table-thead > tr > th {
+	background: #202020;
+}
+.ant-table-tbody > tr > th,
+:where(.css-dev-only-do-not-override-1jr9qlj).ant-table-wrapper
+	.ant-table-tbody
+	> tr
+	> td {
+	border-bottom: 1px solid #202020 !important;
+}
+.projectsTable .ant-table-wrapper .ant-table-thead > tr > th {
+	color: #ffffff;
+}
+.projectsTable .ant-table-wrapper::-webkit-scrollbar {
+	width: 0.5em !important; /* Adjust the width as needed */
+}
+.projectsTable .ant-table-wrapper {
+	padding: 0px 5px;
+}
+.projectsTable .ant-table-wrapper::-webkit-scrollbar-thumb {
+	border-radius: 20px;
+	background-color: #303030; /* Hide the thumb */
+}
+.projectImage {
+	width: 100% !important;
+	height: 3rem !important;
+	object-fit: cover; /* Scale the image to cover the container */
+	object-position: center center; /* Center the image both horizontally and vertically */
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+}

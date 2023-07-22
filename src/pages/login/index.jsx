@@ -25,14 +25,14 @@ function Login() {
       userDetails?.currentUser?.password === "12345678"
     ) {
       localStorage.setItem("loggedIn", "true");
-      navigate("/dashboard");
+      navigate("/projects");
     } else {
       alert("Incorrect Username or Password");
     }
   };
   useEffect(() => {
     if (localStorage.getItem("loggedIn") === "true") {
-      navigate("/dashboard");
+      navigate("/projects");
     }
   }, []);
 
