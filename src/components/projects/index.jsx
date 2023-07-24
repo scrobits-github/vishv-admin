@@ -323,7 +323,7 @@ function Projects() {
 			<div className={`${Styles.projectsTable} projectsTable`}>
 				<Table
 					style={{
-						boxShadow: '10px 10px 8px 10px #888888',
+						boxShadow: '7px 1px 10px 0px #0000001c',
 						height: '30rem',
 						overflow: 'auto',
 					}}
