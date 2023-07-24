@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // UI imports
-import { firestore, storage } from '../firebase/firebase';
 import { PlusOutlined } from '@ant-design/icons';
 import {
 	Button,
@@ -14,6 +13,7 @@ import {
 	Upload,
 	message,
 } from 'antd';
+import { firestore, storage } from '../firebase/firebase';
 import {
 	collection,
 	getDocs,
@@ -323,6 +323,7 @@ function Projects() {
 			<div className={`${Styles.projectsTable} projectsTable`}>
 				<Table
 					style={{
+						boxShadow: '10px 10px 8px 10px #888888',
 						height: '30rem',
 						overflow: 'auto',
 					}}

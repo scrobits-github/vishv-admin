@@ -1,4 +1,5 @@
 .projectsContainer{
+    caret-color: transparent;
     height: 90vh;
     display: flex;
     flex-direction: column;
@@ -8,6 +9,10 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
+}
+.contactsHeadingText{
+    width: 100%;
+    display: flex;
 }
 .projectsButtonStyle {
 	background: var(--primary) !important;

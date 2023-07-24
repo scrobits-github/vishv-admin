@@ -1,6 +1,6 @@
 // Functionality imports
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 // UI imports
 import { icons } from '../../../public/assets/icons';
 import { Layout, Menu, Button, theme } from 'antd';
@@ -9,16 +9,18 @@ import {
 	MenuUnfoldOutlined,
 	UserOutlined,
 	LogoutOutlined,
+	ContactsOutlined,
 } from '@ant-design/icons';
 
 const { Header, Sider, Content } = Layout;
 
 function AppLayout({ children }) {
+	const location = useLocation();
+	console.log(location);
 	const [collapsed, setCollapsed] = useState(false);
 	const {
 		token: { colorBgContainer },
 	} = theme.useToken();
-
 	const navigate = useNavigate(); // Initialize the useNavigate hook
 
 	// Handle logout
@@ -26,16 +28,26 @@ function AppLayout({ children }) {
 		localStorage.clear(); // Clear any user-related data from localStorage
 		navigate('/login'); // Navigate the user to the login page
 	};
+	const getActiveTabFromPathname = () => {
+		const currentPage = decodeURIComponent(window.location.pathname);
+		const pathSegments = currentPage.split('/');
+		return pathSegments[1];
+	};
 
 	const menuItems = [
 		{
-			key: '1',
 			icon: <UserOutlined />,
 			label: 'Projects',
+			key: 'projects',
 			link: '/projects',
 		},
 		{
-			key: '3',
+			icon: <ContactsOutlined />,
+			label: 'Contacts',
+			key: 'contacts',
+			link: '/contacts',
+		},
+		{
 			icon: <LogoutOutlined />,
 			label: 'Logout',
 			onClick: handleLogout, // Call handleLogout when this item is clicked
@@ -59,7 +71,8 @@ function AppLayout({ children }) {
 					}}
 					theme="dark"
 					mode="inline"
-					defaultSelectedKeys={['1']}
+					activeKey={getActiveTabFromPathname()}
+					defaultSelectedKeys={[getActiveTabFromPathname()]}
 				>
 					<div className="sidebarLogo">{icons?.parentIcon}</div>
 					{menuItems.map((item) => (
