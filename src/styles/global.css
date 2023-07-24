@@ -1,22 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Playfair+Display:wght@800&family=Vast+Shadow&display=swap');
 :root {
 	--primary: #e4ae25;
 	--font-primary: 'Playfair Display', serif;
 	--font-secondary: 'Didact Gothic', sans-serif;
 	--font-tertiary: 'Vast Shadow', cursive;
 }
-.sidebarLogo {
-	display: flex !important;
-	width: 100% !important;
-	justify-content: center;
-	padding: 5%;
-}
 
+/* ANTD Table Css */
 .ant-table-thead > tr > th {
+	font-family: var(--font-secondary);
 	background: #202020 !important;
 }
 .ant-table-tbody > tr > th,
 .ant-table-wrapper .ant-table-tbody > tr > td {
-	border-bottom: 1px solid #202020 !important;
+	font-family: var(--font-secondary);
+	border-bottom: 0.0625rem solid #2020203e !important;
 }
 .ant-table-wrapper .ant-table-thead > tr > th {
 	color: #ffffff !important;
@@ -25,24 +23,53 @@
 	width: 0.75rem !important; /* Adjust the width as needed */
 }
 .ant-table-wrapper::-webkit-scrollbar-thumb {
-	border-radius: 20px;
+	border-radius: 1.25rem;
 	background-color: #d9d9d9; /* Hide the thumb */
 }
-.projectImage {
-	width: 100% !important;
-	height: 3rem !important;
-	object-fit: cover; /* Scale the image to cover the container */
-	object-position: center center; /* Center the image both horizontally and vertically */
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	background-position: center;
+.ant-table-thead > tr > th .anticon svg {
+	fill: #ffffff;
 }
-ul.ant-menu  li.ant-menu-item-active:not(:first-child) .ant-menu-item-selected ~ .ant-menu-item-active  {
+.ant-table-thead > tr > th .active svg {
+	fill: #1677ff;
+}
+
+/* ANTD Menu Css */
+ul.ant-menu
+	li.ant-menu-item-active:not(:first-child)
+	.ant-menu-item-selected
+	~ .ant-menu-item-active {
 	background-color: transparent !important; /* Set the background color to transparent */
-  }
+}
 .ant-menu-item-selected + .ant-menu-item-active {
 	background-color: transparent !important; /* Set the background color to transparent */
 }
-/* .ant-menu-item-active {
-	background-color: #1677ff;
-} */
+
+/* ANTD Form Field */
+.loginParentContainer .ant-form-item {
+	text-align: left;
+	width: 70%;
+}
+.loginParentContainer .ant-input-affix-wrapper {
+	border-radius: 0.25rem;
+}
+.loginParentContainer .ant-form label {
+	font-family: var(--font-secondary);
+	color: #ffffff !important;
+	font-weight: 700;
+	width: 70%;
+	text-align: left;
+	font-size: 0.75rem !important;
+}
+.loginParentContainer .ant-btn-primary {
+	font-family: var(--font-secondary) !important;
+	width: 100%;
+	border-radius: 0.25rem;
+	background: var(--primary) !important;
+}
+@media only screen and (max-width: 768px) {
+	/* ANTD Input Field */
+	.ant-form label,
+	.loginParentContainer .ant-form-item {
+		width: 90% !important;
+	}
+}

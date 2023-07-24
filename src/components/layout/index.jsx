@@ -1,6 +1,6 @@
 // Functionality imports
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 // UI imports
 import { icons } from '../../../public/assets/icons';
 import { Layout, Menu, Button, theme } from 'antd';
@@ -11,23 +11,28 @@ import {
 	LogoutOutlined,
 	ContactsOutlined,
 } from '@ant-design/icons';
-
+// CSS imports
+import Styles from '../../styles/login.module.css';
+// Destructure specific components from Ant Design
 const { Header, Sider, Content } = Layout;
 
 function AppLayout({ children }) {
-	const location = useLocation();
-	console.log(location);
 	const [collapsed, setCollapsed] = useState(false);
-	const {
-		token: { colorBgContainer },
-	} = theme.useToken();
 	const navigate = useNavigate(); // Initialize the useNavigate hook
 
-	// Handle logout
+	/**
+	 * Handles the logout action for the user.
+	 * Clears any user-related data from localStorage and navigates the user to the login page.
+	 */
 	const handleLogout = () => {
 		localStorage.clear(); // Clear any user-related data from localStorage
 		navigate('/login'); // Navigate the user to the login page
 	};
+
+	/**
+	 * Extracts the active tab from the current URL pathname.
+	 * @returns {string} The active tab name extracted from the URL pathname.
+	 */
 	const getActiveTabFromPathname = () => {
 		const currentPage = decodeURIComponent(window.location.pathname);
 		const pathSegments = currentPage.split('/');
@@ -57,26 +62,26 @@ function AppLayout({ children }) {
 	return (
 		<Layout>
 			<Sider
-				style={{
-					background: '#202020',
-				}}
+				className={`${Styles.layoutSider}`}
 				trigger={null}
 				collapsible
 				collapsed={collapsed}
 			>
 				<div className="demo-logo-vertical" />
 				<Menu
-					style={{
-						background: '#202020',
-					}}
+					className={`${Styles.layoutMenu}`}
 					theme="dark"
 					mode="inline"
 					activeKey={getActiveTabFromPathname()}
 					defaultSelectedKeys={[getActiveTabFromPathname()]}
 				>
-					<div className="sidebarLogo">{icons?.parentIcon}</div>
+					<div className={`${Styles.layoutSidebarLogo}`}>{icons?.parentIcon}</div>
 					{menuItems.map((item) => (
-						<Menu.Item key={item.key} icon={item.icon}>
+						<Menu.Item
+							onClick={item.link ? undefined : handleLogout}
+							key={item.key}
+							icon={item.icon}
+						>
 							{item.link ? (
 								<Link to={item.link}>{item.label}</Link>
 							) : (
@@ -87,38 +92,20 @@ function AppLayout({ children }) {
 				</Menu>
 			</Sider>
 			<Layout>
-				<Header
-					style={{
-						padding: 0,
-						background: '#202020',
-					}}
-				>
+				<Header className={`${Styles.layoutHeader}`}>
 					<Button
 						type="text"
 						icon={
 							collapsed ? (
-								<MenuUnfoldOutlined style={{ color: '#FFFFFF' }} />
+								<MenuUnfoldOutlined className={`${Styles.layoutMenuIcon}`} />
 							) : (
-								<MenuFoldOutlined style={{ color: '#FFFFFF' }} />
+								<MenuFoldOutlined className={`${Styles.layoutMenuIcon}`} />
 							)
 						}
 						onClick={() => setCollapsed(!collapsed)}
-						style={{
-							fontSize: '16px',
-							width: 64,
-							height: 64,
-						}}
 					/>
 				</Header>
-				<Content
-					style={{
-						height: '100%',
-						margin: '24px 16px',
-						padding: 24,
-						minHeight: 280,
-						background: colorBgContainer,
-					}}
-				>
+				<Content className={`${Styles.layoutContentWrapper}`}>
 					{children}
 				</Content>
 			</Layout>

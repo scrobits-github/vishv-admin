@@ -1,23 +1,26 @@
 // Functionality imports
-import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // UI imports
 import { Form, Input, Select, Upload, Button, message, Modal } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { doc, getDoc, updateDoc } from 'firebase/firestore'; 
-import { firestore, storage } from '../firebase/firebase'; 
-
-const { Option } = Select;
-const { Dragger } = Upload;
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { firestore, storage } from '../firebase/firebase';
+import { PlusOutlined } from '@ant-design/icons';
+// CSS imports
+import Styles from '../../styles/projects.module.css';
+// Destructure specific components from Ant Design
 const { TextArea } = Input;
+const { Dragger } = Upload;
+const { confirm } = Modal;
+const { Option } = Select;
 
 function ProjectDetails() {
 	const location = useLocation();
-	const { id } = useParams(); 
+	const { id } = useParams();
 	const { project } = location.state;
-	const navigate = useNavigate(); 
+	const navigate = useNavigate();
 	const [previewVisible, setPreviewVisible] = useState(false);
 	const [previewImage, setPreviewImage] = useState('');
 	const [form] = Form.useForm();
@@ -37,7 +40,7 @@ function ProjectDetails() {
 					name: `image-${index}`,
 					status: 'done',
 					url: subImage,
-					thumbUrl: subImage, 
+					thumbUrl: subImage,
 			  }))
 			: [];
 
@@ -51,7 +54,7 @@ function ProjectDetails() {
 				const projectSnapshot = await getDoc(projectRef);
 				if (projectSnapshot.exists()) {
 					const projectData = projectSnapshot.data();
-					setSubImages(projectData?.subImages); 
+					setSubImages(projectData?.subImages);
 				} else {
 					console.error('Project not found.');
 				}
@@ -59,11 +62,14 @@ function ProjectDetails() {
 				console.error('Error fetching project data:', error);
 			}
 		};
-
-		// Call the fetchProjectData function when the component mounts
 		fetchProjectData();
 	}, [id, form]);
 
+	/**
+	 * Handles the change event for the primary image file in the form.
+	 * Updates state with the new primary image file and its source.
+	 * @param {Object} info - The information about the primary image file.
+	 */
 	const handleFileChange = (info) => {
 		if (!info.file) {
 			setFileListStatus(true);
@@ -82,54 +88,86 @@ function ProjectDetails() {
 		}
 	};
 
+	/**
+	 * Handles the removal of the primary image file from the form.
+	 * Resets the primary image related states and form field value.
+	 */
 	const handlePrimaryImageRemove = () => {
 		form.setFieldsValue({ primaryImage: undefined });
 		setNewPrimaryImageFile(null);
 		setPrimaryImageSrc(false);
 	};
 
-	const handleRemoveSubImage = async (url) => {
-		try {
-			const updatedSubImages = subImages.filter((subImage) => subImage !== url);
-			const updatedProject = {
-				...project,
-				subImages: updatedSubImages,
-			};
-			if (Array.isArray(updatedProject.subImages)) {
-				const projectRef = doc(firestore, 'project', project?.id);
-				await updateDoc(projectRef, updatedProject);
-				setSubImages(updatedSubImages);
-				message.success('Image removed successfully!');
-			} else {
-				console.error('Invalid subImages data:', updatedProject.subImages);
-				message.error(
-					'Failed to remove image. Invalid data. Please try again later.'
-				);
-			}
-		} catch (error) {
-			console.error('Error removing image:', error);
-			message.error('Failed to remove image. Please try again later.');
-		}
+	/**
+	 * Handles the removal of a sub image from the form.
+	 * Confirms the deletion with a modal before removing the image.
+	 * @param {string} url - The URL of the sub image to be removed.
+	 */
+	const handleRemoveSubImage = (url) => {
+		confirm({
+			title: 'Confirm Delete',
+			content: `Are you sure you want to delete the Image?`,
+			onOk: async () => {
+				try {
+					const updatedSubImages = subImages.filter(
+						(subImage) => subImage !== url
+					);
+					const updatedProject = {
+						...project,
+						subImages: updatedSubImages,
+					};
+					if (Array.isArray(updatedProject.subImages)) {
+						const projectRef = doc(firestore, 'project', project?.id);
+						await updateDoc(projectRef, updatedProject);
+						setSubImages(updatedSubImages);
+						message.success('Image removed successfully!');
+					} else {
+						console.error('Invalid subImages data:', updatedProject.subImages);
+						message.error(
+							'Failed to remove image. Invalid data. Please try again later.'
+						);
+					}
+				} catch (error) {
+					console.error('Error removing image:', error);
+					message.error('Failed to remove image. Please try again later.');
+				}
+			},
+			onCancel() {
+				// Do nothing if the user cancels the delete action
+			},
+		});
 	};
 
+	/**
+	 * Handles the change event for the sub images in the form.
+	 * Updates the defaultFileList state with the new sub images.
+	 * @param {Object} info - The information about the sub images files.
+	 */
 	const handleSubImagesChange = (info) => {
 		if (info.fileList) {
 			const filteredFileList = info.fileList.filter(
 				(file) => file.type && file.type.startsWith('image/')
 			);
 			const newImages = filteredFileList.filter(
-				(file) => file.status !== 'done'
+				(file) => file.status !== 'done' && file.status !== 'removed'
 			);
-			const updatedFileList = defaultFileList
-				.filter((file) => file.status === 'done')
-				.concat(newImages);
-			setDefaultFileList(updatedFileList);
-			if (updatedFileList.length > 0) {
-				setNewSubImages(updatedFileList.map((file) => file.originFileObj));
+			if (filteredFileList.some((file) => file.name)) {
+				const updatedFileList = defaultFileList
+					.filter((file) => file.status === 'done')
+					.concat(newImages);
+				setDefaultFileList(updatedFileList);
+				if (updatedFileList.length > 0) {
+					setNewSubImages(updatedFileList.map((file) => file.originFileObj));
+				}
 			}
 		}
 	};
 
+	/**
+	 * Handles the preview of an image.
+	 * If the image is not available as a URL, create a preview URL using the FileReader API.
+	 * @param {Object} file - The image file to be previewed.
+	 */
 	const handlePreview = async (file) => {
 		if (!file.url && !file.preview) {
 			file.preview = await new Promise((resolve) => {
@@ -144,9 +182,14 @@ function ProjectDetails() {
 		setPreviewVisible(true);
 	};
 
+	/**
+	 * Handles the form submission when the user clicks the "Submit" button.
+	 * Updates the project data in Firestore with the new information.
+	 * @param {Object} values - The form values submitted by the user.
+	 */
 	const onFinish = async (values) => {
 		try {
-			setLoading(true); 
+			setLoading(true);
 			const primaryImageFile = newPrimaryImageFile || primaryImageSrc;
 			let primaryImageRef;
 			if (newPrimaryImageFile) {
@@ -161,11 +204,9 @@ function ProjectDetails() {
 					return await getDownloadURL(subImageRef);
 				})
 			);
-
 			const allSubImageURLs = subImages
 				? subImages.concat(newSubImageURLs.filter((url) => url !== null))
 				: newSubImageURLs.filter((url) => url !== null);
-
 			const updatedProject = {
 				title: values.projectName,
 				projectType: values.projectType,
@@ -175,8 +216,7 @@ function ProjectDetails() {
 					: primaryImageSrc,
 				subImages: allSubImageURLs,
 			};
-
-			const projectRef = doc(firestore, 'project', project?.id); 
+			const projectRef = doc(firestore, 'project', project?.id);
 			await updateDoc(projectRef, updatedProject);
 			message.success('Project updated successfully!');
 			await navigate(`/projects`);
@@ -199,7 +239,7 @@ function ProjectDetails() {
 					description: project.description,
 					primaryImage: primaryImageSrc,
 				}}
-				onFinish={onFinish} 
+				onFinish={onFinish}
 			>
 				<Form.Item
 					label="Project Name"
@@ -283,18 +323,18 @@ function ProjectDetails() {
 						{newPrimaryImageFile ? (
 							<>
 								<img
+									className={`${Styles.projectDetailsDraggerImage}`}
 									src={URL.createObjectURL(newPrimaryImageFile)}
 									alt="New Upload"
-									style={{ width: '100px', height: 'auto' }}
 								/>
 								<p className="ant-upload-drag-icon">Uploaded</p>
 							</>
 						) : !fileListStatus ? (
 							<>
 								<img
+									className={`${Styles.projectDetailsDraggerFileImage}`}
 									src={primaryImageSrc}
 									alt={project.title}
-									style={{ width: '100px', height: 'auto' }}
 								/>
 								<p className="ant-upload-drag-icon">Uploaded</p>
 							</>
@@ -320,15 +360,20 @@ function ProjectDetails() {
 						multiple={true}
 						beforeUpload={() => false}
 						fileList={defaultFileList}
+						onRemove={(file) => handleRemoveSubImage(file.url)}
 						onChange={handleSubImagesChange}
 						listType="picture-card"
 						onPreview={handlePreview}
-						onRemove={(file) => handleRemoveSubImage(file.url)}
 					>
-						<div>
+						<p className="ant-upload-drag-icon">
 							<PlusOutlined />
-							<div style={{ marginTop: 8 }}>Upload</div>
-						</div>
+						</p>
+						<p className="ant-upload-text">
+							Click or drag files to this area to upload
+						</p>
+						<p className="ant-upload-hint">
+							Support for multiple images (JPG, JPEG, PNG).
+						</p>
 					</Dragger>
 				</Form.Item>
 				<Form.Item>
@@ -336,8 +381,8 @@ function ProjectDetails() {
 						Save Changes
 					</Button>
 					<Button
+						className={`${Styles.projectDetailsSaveButton}`}
 						onClick={() => window.history.back()}
-						style={{ marginLeft: 8 }}
 					>
 						Cancel
 					</Button>
@@ -349,7 +394,11 @@ function ProjectDetails() {
 				footer={null}
 				onCancel={() => setPreviewVisible(false)}
 			>
-				<img alt="Preview" style={{ width: '100%' }} src={previewImage} />
+				<img
+					className={`${Styles.projectDetailsModalImage}`}
+					alt="Preview"
+					src={previewImage}
+				/>
 			</Modal>
 		</div>
 	);

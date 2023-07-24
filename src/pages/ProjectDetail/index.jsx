@@ -1,4 +1,6 @@
+// Functionality imports
 import React from "react";
+// UI imports
 import ProjectDetails from "../../components/projectDetails";
 
 function Project() {

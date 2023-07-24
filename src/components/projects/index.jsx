@@ -12,6 +12,7 @@ import {
 	Select,
 	Upload,
 	message,
+	Switch,
 } from 'antd';
 import { firestore, storage } from '../firebase/firebase';
 import {
@@ -25,6 +26,7 @@ import {
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 // CSS imports
 import Styles from '../../styles/projects.module.css';
+// Destructure specific components from Ant Design
 const { Option } = Select;
 const { Dragger } = Upload;
 const { TextArea } = Input;
@@ -37,12 +39,21 @@ function Projects() {
 	const [form] = Form.useForm();
 	const [dataArr, setDataArr] = useState([]);
 	const [isModalButtonLoading, setModalButtonLoading] = useState(false);
+	const [paginationEnabled, setPaginationEnabled] = useState(true);
 	const projectTypes = ['Interior', 'Landscape', 'Architecture'];
+	const [pagination, setPagination] = useState({
+		current: 1,
+		pageSize: 4,
+	});
 
 	useEffect(() => {
 		fetchData();
 	}, []);
 
+	/**
+	 * Fetches data from the Firestore collection 'project'.
+	 * Updates the 'dataArr' state with the fetched data.
+	 */
 	const fetchData = async () => {
 		try {
 			const collectionRef = collection(firestore, 'project');
@@ -57,18 +68,36 @@ function Projects() {
 		}
 	};
 
+	/**
+	 * Shows the modal to create a new project.
+	 * Sets 'isModalVisible' state to true.
+	 */
 	const showModal = () => {
 		setIsModalVisible(true);
 	};
 
+	/**
+	 * Handles the "OK" button click event of the modal.
+	 * Submits the form in the modal.
+	 */
 	const handleOk = () => {
 		form.submit();
 	};
+
+	/**
+	 * Handles the "Cancel" button click event of the modal.
+	 * Closes the modal and resets the form fields.
+	 */
 	const handleCancel = () => {
 		setIsModalVisible(false);
 		form.resetFields();
 	};
 
+	/**
+	 * Handles the change event for the primary image file in the form.
+	 * Sets the 'primaryImageUploaded' state based on the uploaded primary image.
+	 * @param {Object} info - The information about the primary image file.
+	 */
 	const handleFileChange = (info) => {
 		const fileList = info.fileList;
 		const filteredFileList = fileList.slice(-1);
@@ -77,6 +106,11 @@ function Projects() {
 		}
 	};
 
+	/**
+	 * Handles the form submission when the user clicks the "Submit" button in the modal.
+	 * Creates a new project in Firestore with the form data.
+	 * @param {Object} values - The form values submitted by the user.
+	 */
 	const onFinish = async (values) => {
 		try {
 			setModalButtonLoading(true); // Set the modal OK button to loading state
@@ -111,13 +145,17 @@ function Projects() {
 			setPrimaryImageUploaded(false);
 			form.resetFields();
 			fetchData();
-			setModalButtonLoading(false); // Set the modal OK button to loading state
+			setModalButtonLoading(false);
 		} catch (error) {
 			console.error('Error creating project:', error);
 			message.error('Failed to create project. Please try again later.');
 		}
 	};
 
+	/**
+	 * Renders the form inside the modal for creating a new project.
+	 * @returns {JSX.Element} - JSX Element representing the modal form.
+	 */
 	const renderModalForm = (
 		<Modal
 			title="Create New Project"
@@ -235,12 +273,22 @@ function Projects() {
 		</Modal>
 	);
 
+	/**
+	 * Handles the "Edit" button click event for a project record.
+	 * Navigates the user to the project details page for editing.
+	 * @param {Object} record - The project record to be edited.
+	 */
 	const handleEdit = (record) => {
 		navigate(`/projects/projectDetails/${record?.id}`, {
 			state: { project: record },
 		});
 	};
 
+	/**
+	 * Handles the "Delete" button click event for a project record.
+	 * Shows a confirmation modal before deleting the project from Firestore.
+	 * @param {Object} record - The project record to be deleted.
+	 */
 	const handleDelete = (record) => {
 		confirm({
 			title: 'Confirm Delete',
@@ -262,16 +310,42 @@ function Projects() {
 		});
 	};
 
+	/**
+	 * Handles the change event of the table pagination.
+	 * Updates the 'pagination' state with the current pagination settings.
+	 * @param {Object} pagination - The current pagination settings.
+	 * @param {Object} filters - The table filters.
+	 * @param {Object} sorter - The table sorter.
+	 */
+	const handleTableChange = (pagination, filters, sorter) => {
+		setPagination(pagination);
+	};
+
+	/**
+	 * Toggles the pagination feature of the table.
+	 * Updates the 'paginationEnabled' state based on the checkbox toggle.
+	 * @param {boolean} checked - The checked status of the pagination toggle checkbox.
+	 */
+	const togglePagination = (checked) => {
+		setPaginationEnabled(checked);
+	};
+
 	const columns = [
 		{
 			title: 'Project Name',
 			dataIndex: 'title',
 			key: 'title',
+			sorter: (a, b) => {
+				return a.title.localeCompare(b.title);
+			},
 		},
 		{
 			title: 'Project Type',
 			dataIndex: 'projectType',
 			key: 'projectType',
+			sorter: (a, b) => {
+				return a.projectType.localeCompare(b.projectType);
+			},
 		},
 		{
 			title: 'Description',
@@ -287,7 +361,7 @@ function Projects() {
 					<img
 						src={record.primaryImage}
 						alt={record.title}
-						className='projectImage'
+						className={`${Styles.projectImage}`}
 					/>
 				);
 			},
@@ -321,16 +395,22 @@ function Projects() {
 				</Button>
 			</div>
 			<div className={`${Styles.projectsTable} projectsTable`}>
+				<div className={`${Styles.contactsHeadingText}`}>
+					<h2>List of all projects</h2>
+				</div>
+				<div className={`${Styles.projectsPagination}`}>
+					<span className={`${Styles.projectsPaginationText}`}>
+						Pagination:
+					</span>
+					<Switch checked={paginationEnabled} onChange={togglePagination} />
+				</div>
 				<Table
-					style={{
-						boxShadow: '7px 1px 10px 0px #0000001c',
-						height: '30rem',
-						overflow: 'auto',
-					}}
+					className={`${Styles.projectsTableData}`}
 					dataSource={dataArr}
 					columns={columns}
 					rowKey="id"
-					pagination={false}
+					onChange={handleTableChange}
+					pagination={paginationEnabled ? pagination : false}
 				/>
 			</div>
 			{renderModalForm}

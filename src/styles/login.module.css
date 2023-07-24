@@ -1,0 +1,110 @@
+.loginParentContainer {
+	padding: 5% 10%;
+	height: 90vh;
+	background: #202020;
+}
+.loginContainer {
+	box-shadow: 0rem 0rem 0.5rem 0.375rem #00000017;
+	border-radius: 0.5rem;
+	height: 90%;
+	overflow: hidden !important;
+	display: flex;
+	flex-direction: row;
+}
+.loginFormContainer {
+	align-items: center;
+	flex-direction: column;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+}
+.loginFormText {
+	color: #ffffff;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+.loginFormHeading {
+	font-family: var(--font-primary);
+	font-size: 2rem;
+	margin: 0;
+}
+.loginFormSubHeading {
+	margin: 0.3125rem;
+	font-size: 0.875rem;
+}
+.loginFooter,
+.loginFormLogo {
+	color: #ffffff;
+	margin: 5% 7%;
+}
+.loginImage img {
+	height: 130%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+}
+.loginImage {
+	overflow: hidden;
+	background: #ffffff;
+	width: 50%;
+	display: flex;
+	align-items: center;
+	padding: 0.3rem;
+}
+.loginImageContainer {
+	height: 100%;
+	border-radius: 0rem 0.4rem 0.4rem 0rem;
+	overflow: hidden;
+}
+.loginForm {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+}
+.loginForm,
+.loginImage {
+	overflow: hidden;
+	width: 50%;
+	background: #252525;
+}
+
+/* Layout css */
+.layoutSider,
+.layoutMenu,
+.layoutHeader {
+	background: #202020 !important;
+	padding: 0;
+}
+.layoutMenuIcon {
+	color: #ffffff;
+}
+.layoutContentWrapper {
+	margin: 1.5rem 1rem !important;
+	padding: 1.5rem !important;
+}
+.layoutSidebarLogo {
+	display: flex !important;
+	width: 100% !important;
+	justify-content: center;
+	padding: 5%;
+}
+
+@media only screen and (max-width: 480px) {
+	.loginParentContainer {
+		padding: 0;
+	}
+}
+@media only screen and (max-width: 768px) {
+	.loginParentContainer {
+		height: 100vh;
+	}
+	.loginForm {
+		width: 100%;
+	}
+	.loginImage {
+		display: none;
+	}
+}

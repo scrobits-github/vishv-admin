@@ -1,18 +1,28 @@
-.projectsContainer{
-    caret-color: transparent;
-    height: 90vh;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+.projectsContainer {
+	caret-color: transparent;
+	display: flex;
+	min-height: 90vh;
+	flex-direction: column;
+	gap: 1rem;
 }
-.projectsCreateButton{
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
+.projectsCreateButton {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
 }
-.contactsHeadingText{
-    width: 100%;
-    display: flex;
+.projectImage {
+	width: 100% !important;
+	height: 3rem !important;
+	object-fit: cover;
+	object-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+}
+.projectsTableData {
+	border-radius: 0.5rem;
+	box-shadow: 0rem 0rem 0.5rem 0.3125rem #0000001c;
+	overflow: auto;
 }
 .projectsButtonStyle {
 	background: var(--primary) !important;
@@ -21,4 +31,33 @@
 	margin-top: 1.25rem;
 	border-radius: 0rem;
 	font-size: 1.25rem;
+}
+.projectsPagination {
+	font-family: var(--font-secondary);
+	margin-bottom: 1rem;
+}
+.projectsPaginationText {
+	margin-right: 0.5rem;
+}
+
+/* Contact Css */
+.contactsHeadingText {
+	width: 100%;
+	display: flex;
+}
+
+/* Project Details Css */
+.projectDetailsDraggerImage {
+	width: 6.25rem;
+	height: auto;
+}
+.projectDetailsDraggerFileImage {
+	width: 6.25rem;
+	height: auto;
+}
+.projectDetailsSaveButton {
+	margin-left: 0.625rem;
+}
+.projectDetailsModalImage {
+	width: 100%;
 }
