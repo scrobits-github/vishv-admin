@@ -90,6 +90,7 @@ function Projects() {
 	 */
 	const handleCancel = () => {
 		setIsModalVisible(false);
+		setPrimaryImageUploaded(false);
 		form.resetFields();
 	};
 
